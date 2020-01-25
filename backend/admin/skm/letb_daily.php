@@ -22,7 +22,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-	<title>PT INDOLAKTO</title>
+	<title>Transkrip Univ | Admin</title>
 
     <!-- Custom fonts for this template-->
     <link href="../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,19 +34,6 @@
     <!-- Custom styles for this page -->
     <link href="../../assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-    <style>
-        /* .containerr {
-          width: 100%;
-          margin: 15px 10px;
-        } */
-
-        .chart {
-          width: 90%;
-          float: center;
-          text-align: center;
-        }
-      </style>
-      <script type="text/javascript" src="../../assets/js/demo/Chart.bundle.min.js"></script>
 </head>
 
 <!--bagian body-->
@@ -125,111 +112,132 @@
                 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Export Excel</a>
                 </div>
                             <div class="row">
-                                <a href="output.php" class="btn btn-primary btn-sm ml-3">Grafik</a>
-                                <a href="outputtb.php" class="btn btn-primary btn-sm ml-2">Tabel</a>
+                                <a href="le.php" class="btn btn-primary btn-sm ml-3">Grafik</a>
+                                <a href="letb.php" class="btn btn-primary btn-sm ml-2">Tabel</a>
            
                             </div>
-                           
+                            <br>
                 
-
+                            <form method="get">
+                                <label>PILIH TANGGAL</label>
+                                <input type="text" name="Tanggal">
+                                <input type="submit" value="FILTER">
+                            </form>
                 <!-- Tabel Mahasiswa -->
-                <?php
-
-                    $output = "Select * From Rekap_SKM_Dummy";
-                    $stmt = sqlsrv_query( $conn, $output);
-
-                    // $connect = mysqli_connect('localhost', 'root', '', 'tutorial');
-                    // $data_penjualan = mysqli_query($connect, "SELECT tanggal, SUM(total) AS total FROM penjualan GROUP BY tanggal");
-
-                    $data_tanggal = array();
-                    $data_outputA = array();
-                    $data_outputB = array();
-
-                    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {                                  
-                    $data_tanggal[] = $row['Tanggal']; // Memasukan tanggal ke dalam array
-                    $data_outputA[] = $row['Output_A']; // Memasukan output ke dalam array
-                    $data_outputB[] = $row['Output_B'];
-                    }
-    ?>
-
-                <div class="row">
-    
-          
-
-            <!-- Area Chart -->
-            <div class="col-xl col-6">
-              <div class="card shadow my-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Grafik Output A</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Data LE</h6>
                     </div>
-                  </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                <!-- <div class="containerr"> -->
-                    <div class="chart">
-                        <!-- <h2>Line Chart</h2> -->
-                        <canvas id="line-chartA"></canvas>
-                        <!-- <canvas id="line-chartB"></canvas> -->
-                    <!-- </div> -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tanggal</th>
+                                    <th>Jam</th>
+                                    <th>LE_A</th>
+                                    <th>LE_B</th>
+                                    <th>LE_C</th>
+                                    <th>LE_D</th>
+                                    <th>Plan_A</th>
+                                    <th>Plan_B</th>
+                                    <th>Plan_C</th>
+                                    <th>Plan_D</th>
+                                    <th>Ach_A</th>
+                                    <th>Ach_B</th>
+                                    <th>Ach_C</th>
+                                    <th>Ach_D</th>
+                                    <th>LE(Manual)_A</th>
+                                    <th>LE(Manual)_B</th>
+                                    <th>LE(Manual)_C</th>
+                                    <th>LE(Manual)_D</th>
+                                    <!-- <th>Menu</th> -->
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                <th>#</th>
+                                    <th>Tanggal</th>
+                                    <th>Jam</th>
+                                    <th>LE_A</th>
+                                    <th>LE_B</th>
+                                    <th>LE_C</th>
+                                    <th>LE_D</th>
+                                    <th>Plan_A</th>
+                                    <th>Plan_B</th>
+                                    <th>Plan_C</th>
+                                    <th>Plan_D</th>
+                                    <th>Ach_A</th>
+                                    <th>Ach_B</th>
+                                    <th>Ach_C</th>
+                                    <th>Ach_D</th>
+                                    <th>LE(Manual)_A</th>
+                                    <th>LE(Manual)_B</th>
+                                    <th>LE(Manual)_C</th>
+                                    <th>LE(Manual)_D</th>
+                                    <!-- <th>Menu</th> -->
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <?php
+
+                                    if(isset($_GET['Tanggal'])){
+                                        $tgl = $_GET['Tanggal'];
+                                        // $Date = $tgl->format('d/m/Y');
+                                        $output = "Select * From Rekap_SKM_Dummy where Tanggal ='$tgl' ";
+                                        // $sql = mysqli_query($koneksi,"select * from barang_masuk where tanggal='$tgl'");
+                                    }else{
+                                        // $sql = mysqli_query($koneksi,"select * from barang_masuk");
+                                        $output = "Select * From Rekap_SKM_Dummy";
+                                    }
+
+                                    /**
+                                     * mengeluarkan data user dari database
+                                     */
+                                    // $output = "Select * From Rekap_SKM_Dummy";
+                                    $stmt = sqlsrv_query( $conn, $output);
+                                    $no = 1;
+                                
+                                    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {                                  
+                                        // $Date = $row['Tanggal']->format('d/m/Y');
+                                        
+                                    ?>
+                                       
+                                            <tr>
+                                            <td><?=$no++?></td>
+                                            <td><?=$row['Tanggal']?></td>
+                                            <td><?=$row['Jam']?></td>
+                                            <td><?=$row['Le_A']?></td>
+                                            <td><?=$row['Le_B']?></td>
+                                            <td><?=$row['Le_C']?></td>
+                                            <td><?=$row['Le_D']?></td>
+                                            <td><?=$row['Plan_A(Manual)']?></td>
+                                            <td><?=$row['Plan_B(Manual)']?></td>
+                                            <td><?=$row['Plan_C(Manual)']?></td>
+                                            <td><?=$row['Plan_D(Manual)']?></td>
+                                            <td><?=$row['Ach_A']?></td>
+                                            <td><?=$row['Ach_B']?></td>
+                                            <td><?=$row['Ach_C']?></td>
+                                            <td><?=$row['Ach_D']?></td>
+                                            <td><?=$row['Le_A(Manual)']?></td>
+                                            <td><?=$row['Le_B(Manual)']?></td>
+                                            <td><?=$row['Le_C(Manual)']?></td>
+                                            <td><?=$row['Le_D(Manual)']?></td>
+                                            </tr>
+                                        <?php } ?>
+                            </tbody>
+                            </table>
+                        </div>
                     </div>
-                  <!-- <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
-                  </div> -->
                 </div>
-              </div>
-            </div>
-            <div class="col-xl col-6">
-              <div class="card shadow my-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Grafik Output B</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                <!-- <div class="containerr"> -->
-                    <div class="chart">
-                        <!-- <h2>Line Chart</h2> -->
-                        <canvas id="line-chartB"></canvas>
-                        <!-- <canvas id="line-chartB"></canvas> -->
-                    <!-- </div> -->
-                    </div>
-                  <!-- <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
-                  </div> -->
-                </div>
-              </div>
-            </div>
-          </div>
                 
             </div>
             <!-- /.container-fluid -->
 
         </div>
         <!-- End of Main Content -->
+
         <div class="row">
         <div class="ml-3">
           <a href="#" class="btn btn-primary btn-sm ml-4">Shiftly</a>
@@ -285,43 +293,6 @@
          * load library yang dibutuhkan
          */
     ?>
-     <script>
-        
-
-        var linechart = document.getElementById('line-chartA');
-        var chart = new Chart(linechart, {
-          type: 'line',
-          data: {
-            labels: <?php echo json_encode($data_tanggal) ?>, // Merubah data tanggal menjadi format JSON
-            datasets: [{
-              label: 'Data Output A',
-              data: <?php echo json_encode($data_outputA) ?>,
-              borderColor: 'rgba(54, 162, 235, 1)',
-              backgroundColor: 'transparent',
-              borderWidth: 2
-            }]
-          }
-        });
-
-        var linechart = document.getElementById('line-chartB');
-        var chart = new Chart(linechart, {
-          type: 'line',
-          data: {
-            labels: <?php echo json_encode($data_tanggal) ?>, // Merubah data tanggal menjadi format JSON
-            datasets: [{
-              label: 'Data Output B',
-              data: <?php echo json_encode($data_outputB) ?>,
-              borderColor: 'rgba(75, 192, 192, 1)',
-              backgroundColor: 'transparent',
-              borderWidth: 2
-            }]
-          }
-        });
-
-        
-      </script>
-
-
     <!-- Bootstrap core JavaScript-->
     <script src="../../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -338,11 +309,6 @@
     
     <!-- Page level custom scripts -->
     <script src="../../assets/js/demo/datatables-demo.js"></script>
-    <script src="../../assets/vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <!-- <script src="../../assets/js/demo/chart-area-demo.js"></script>
-  <script src="../../assets/js/demo/chart-pie-demo.js"></script> -->
 </body>
 
 </html>

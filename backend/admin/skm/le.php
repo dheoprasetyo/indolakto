@@ -34,6 +34,19 @@
     <!-- Custom styles for this page -->
     <link href="../../assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+    <style>
+        .containerr {
+          width: 100%;
+          margin: 15px 10px;
+        }
+
+        .chart {
+          width: 50%;
+          float: left;
+          text-align: center;
+        }
+      </style>
+      <script type="text/javascript" src="../../assets/js/demo/Chart.bundle.min.js"></script>
 </head>
 
 <!--bagian body-->
@@ -120,10 +133,25 @@
                 
 
                 <!-- Tabel Mahasiswa -->
-                
+                <?php
+
+                    $output = "Select * From Rekap_SKM_Dummy";
+                    $stmt = sqlsrv_query( $conn, $output);
+
+                    // $connect = mysqli_connect('localhost', 'root', '', 'tutorial');
+                    // $data_penjualan = mysqli_query($connect, "SELECT tanggal, SUM(total) AS total FROM penjualan GROUP BY tanggal");
+
+                    $data_tanggal = array();
+                    $data_output = array();
+
+                    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {                                  
+                    $data_tanggal[] = $row['Tanggal']; // Memasukan tanggal ke dalam array
+                    $data_output[] = $row['Le_A(Manual)']; // Memasukan output ke dalam array
+                    }
+    ?>
 
                 <div class="row">
-
+    
           
 
             <!-- Area Chart -->
@@ -147,9 +175,13 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="chart-area">
+                    <div class="chart">
+                        <!-- <h2>Line Chart</h2> -->
+                        <canvas id="line-chart"></canvas>
+                    </div>
+                  <!-- <div class="chart-area">
                     <canvas id="myAreaChart"></canvas>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -215,6 +247,26 @@
          * load library yang dibutuhkan
          */
     ?>
+     <script>
+        
+
+        var linechart = document.getElementById('line-chart');
+        var chart = new Chart(linechart, {
+          type: 'line',
+          data: {
+            labels: <?php echo json_encode($data_tanggal) ?>, // Merubah data tanggal menjadi format JSON
+            datasets: [{
+              label: 'Data Penjualan',
+              data: <?php echo json_encode($data_output) ?>,
+              borderColor: 'rgba(255,99,132,1)',
+              backgroundColor: 'transparent',
+              borderWidth: 2
+            }]
+          }
+        });
+      </script>
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="../../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -234,8 +286,8 @@
     <script src="../../assets/vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="../../assets/js/demo/chart-area-demo.js"></script>
-  <script src="../../assets/js/demo/chart-pie-demo.js"></script>
+  <!-- <script src="../../assets/js/demo/chart-area-demo.js"></script>
+  <script src="../../assets/js/demo/chart-pie-demo.js"></script> -->
 </body>
 
 </html>

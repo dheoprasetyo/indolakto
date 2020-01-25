@@ -181,35 +181,35 @@
                                     /**
                                      * mengeluarkan data user dari database
                                      */
-                                    $output = "Select * From skm";
+                                    $output = "Select * From Rekap_SKM_Dummy";
                                     $stmt = sqlsrv_query( $conn, $output);
                                     $no = 1;
                                 
                                     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {                                  
-                                        $Date = $row['Tanggal']->format('d/m/Y');
+                                        // $Date = $row['Tanggal']->format('d/m/Y');
                                         
                                     ?>
                                        
                                             <tr>
                                             <td><?=$no++?></td>
-                                            <td><?=$Date?></td>
+                                            <td><?=$row['Tanggal']?></td>
                                             <td><?=$row['Jam']?></td>
-                                            <td><?=$row['LE_A']?></td>
-                                            <td><?=$row['LE_B']?></td>
-                                            <td><?=$row['LE_C']?></td>
-                                            <td><?=$row['LE_D']?></td>
-                                            <td><?=$row['Plan_A']?></td>
-                                            <td><?=$row['Plan_B']?></td>
-                                            <td><?=$row['Plan_C']?></td>
-                                            <td><?=$row['Plan_D']?></td>
+                                            <td><?=$row['Le_A']?></td>
+                                            <td><?=$row['Le_B']?></td>
+                                            <td><?=$row['Le_C']?></td>
+                                            <td><?=$row['Le_D']?></td>
+                                            <td><?=$row['Plan_A(Manual)']?></td>
+                                            <td><?=$row['Plan_B(Manual)']?></td>
+                                            <td><?=$row['Plan_C(Manual)']?></td>
+                                            <td><?=$row['Plan_D(Manual)']?></td>
                                             <td><?=$row['Ach_A']?></td>
                                             <td><?=$row['Ach_B']?></td>
                                             <td><?=$row['Ach_C']?></td>
                                             <td><?=$row['Ach_D']?></td>
-                                            <td><?=$row['LE(Manual)_A']?></td>
-                                            <td><?=$row['LE(Manual)_B']?></td>
-                                            <td><?=$row['LE(Manual)_C']?></td>
-                                            <td><?=$row['LE(Manual)_D']?></td>
+                                            <td><?=$row['Le_A(Manual)']?></td>
+                                            <td><?=$row['Le_B(Manual)']?></td>
+                                            <td><?=$row['Le_C(Manual)']?></td>
+                                            <td><?=$row['Le_D(Manual)']?></td>
                                             </tr>
                                         <?php } ?>
                             </tbody>
@@ -227,7 +227,7 @@
         <div class="row">
         <div class="ml-3">
           <a href="#" class="btn btn-primary btn-sm ml-4">Shiftly</a>
-          <a href="#" class="btn btn-primary btn-sm ml-1">Daily</a>
+          <a href="letb_daily.php" class="btn btn-primary btn-sm ml-1">Daily</a>
           <a href="#" class="btn btn-primary btn-sm ml-1">Weekly</a>
           <a href="#" class="btn btn-primary btn-sm ml-1">Monthly</a>
           <a href="#" class="btn btn-primary btn-sm ml-1">Yearly</a>
