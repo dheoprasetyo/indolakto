@@ -35,6 +35,15 @@
     <link href="../../assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
+<script src="jquery-3.4.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#shiftbtn").click(function(){
+            $("#labeltanggal").show();
+        })
+    })
+</script>
+
 
 <!--bagian body-->
 <body id="page-top">
@@ -121,7 +130,14 @@
                 <!-- Tabel Mahasiswa -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Data Output</h6>
+                        <div class="row">
+                        <h6 class="m-0 font-weight-bold text-primary ml-3">Data Output Daily</h6>
+                        <form action="#" method="POST">
+                            <label class="date1 ml-3"><b>Tanggal :</b></label>
+                            <input class="date" type="Date" name="tanggal" id="tanggal" value="<?php echo isset($_POST['tanggal']) ? $_POST['tanggal'] : ''?>"/>
+                            <button class="but1" type="submit">Tampil</button>
+                        </form>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -172,7 +188,19 @@
                                     /**
                                      * mengeluarkan data user dari database
                                      */
-                                    $output = "Select * From skm";
+                                    //buat sortir ketika tombol shift diklik
+
+                                    //perintah buat nyatuin yg beda tanggal jadi 1 tabel
+                                    if (isset($_POST['tanggal'])) {
+                                        $tanggal = $_POST['tanggal'];
+                                        $tanggal2 = strtotime("+1 day", strtotime("$tanggal"));
+                                        $tanggalbaru = date("Y-m-d", $tanggal2);
+                                        $output = "Select * From Rekap_SKM_Dummy where Tanggal = '$tanggal' and Jam >='08:00' or Tanggal ='$tanggalbaru' and Jam >= '00:00' and Jam <='07:00' order by tanggal,jam asc";
+                                    }
+                                    else{
+                                        $output = "Select * From Rekap_SKM_Dummy where Tanggal = '2019-01-01' and Jam >='08:00' or Tanggal ='2019-01-02' and Jam >= '00:00' and Jam <='07:00' order by tanggal,jam asc";
+                                    }
+
                                     $stmt = sqlsrv_query( $conn, $output);
                                     $no = 1;
                                 
@@ -189,10 +217,10 @@
                                             <td><?=$row['Output_B']?></td>
                                             <td><?=$row['Output_C']?></td>
                                             <td><?=$row['Output_D']?></td>
-                                            <td><?=$row['Plan_A']?></td>
-                                            <td><?=$row['Plan_B']?></td>
-                                            <td><?=$row['Plan_C']?></td>
-                                            <td><?=$row['Plan_D']?></td>
+                                            <td><?=$row['Plan_A(Manual)']?></td>
+                                            <td><?=$row['Plan_B(Manual)']?></td>
+                                            <td><?=$row['Plan_C(Manual)']?></td>
+                                            <td><?=$row['Plan_D(Manual)']?></td>
                                             <td><?=$row['Ach_A']?></td>
                                             <td><?=$row['Ach_B']?></td>
                                             <td><?=$row['Ach_C']?></td>
@@ -211,13 +239,16 @@
         </div>
         <!-- End of Main Content -->
 
+
         <div class="row">
         <div class="ml-3">
+        <form method="post">
           <a href="outputtb_shiftly.php" class="btn btn-primary btn-sm ml-4">Shiftly</a>
           <a href="outputtb_daily.php" class="btn btn-primary btn-sm ml-1">Daily</a>
           <a href="outputtb_weekly.php" class="btn btn-primary btn-sm ml-1">Weekly</a>
           <a href="#" class="btn btn-primary btn-sm ml-1">Monthly</a>
           <a href="#" class="btn btn-primary btn-sm ml-1">Yearly</a>
+        </form>
         </div>
       </div>
 
